@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tobi Bolaji | Penetration Tester</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --green:#00ff88;--green-dim:#00cc66;--green-dark:#003322;
+    --red:#ff4466;--amber:#ffaa00;
+    --bg:#0a0d0a;--bg2:#111511;--bg3:#151a15;
+    --border:#1a2e1a;--text:#c8e6c8;--muted:#567056;
+  }
+  body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;min-height:100vh}
+  .scanline{position:fixed;top:0;left:0;width:100%;height:2px;background:rgba(0,255,136,0.07);animation:scan 4s linear infinite;pointer-events:none;z-index:999}
+  @keyframes scan{0%{top:0}100%{top:100%}}
+  header{border-bottom:1px solid var(--border);padding:2rem;position:relative;overflow:hidden}
+  header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 30px,rgba(0,255,136,0.012) 30px,rgba(0,255,136,0.012) 31px)}
+  .header-inner{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap}
+  .logo-area{display:flex;align-items:center;gap:1rem}
+  .avatar{width:64px;height:64px;border:2px solid var(--green);border-radius:4px;background:var(--green-dark);display:flex;align-items:center;justify-content:center;font-family:'Share Tech Mono',monospace;font-size:22px;color:var(--green)}
+  .name-block h1{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;color:var(--green);letter-spacing:2px}
+  .name-block .role{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:3px;text-transform:uppercase}
+  .status-bar{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);text-align:right}
+  .status-bar .ping{color:var(--green);animation:blink 1.4s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+  .nav-links{display:flex;gap:1.5rem;font-size:13px;font-family:'Share Tech Mono',monospace}
+  .nav-links a{color:var(--muted);text-decoration:none;transition:color 0.2s}
+  .nav-links a:hover{color:var(--green)}
+  main{max-width:960px;margin:0 auto;padding:2rem}
+  .section-label{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-bottom:1.5rem;border-left:3px solid var(--green);padding-left:12px}
+  .bio-block{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:2.5rem;position:relative}
+  .bio-block::before{content:'// about.txt';font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);position:absolute;top:-10px;right:12px;background:var(--bg2);padding:0 6px}
+  .bio-block p{line-height:1.8;color:#9dc89d}
+  .certs{display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem}
+  .cert-badge{background:var(--green-dark);border:1px solid var(--green-dim);border-radius:3px;padding:4px 12px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--green)}
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:2.5rem}
+  .proj-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1.25rem;transition:border-color 0.2s;position:relative;overflow:hidden}
+  .proj-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--green)}
+  .proj-card:hover{border-color:var(--green-dim)}
+  .proj-card.red::after{background:var(--red)}
+  .proj-card.amber::after{background:var(--amber)}
+  .proj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+  .proj-name{font-weight:700;font-size:15px;color:var(--text);letter-spacing:1px}
+  .proj-tag{font-family:'Share Tech Mono',monospace;font-size:10px;padding:2px 8px;border-radius:2px;background:rgba(0,255,136,0.1);color:var(--green)}
+  .proj-tag.red{background:rgba(255,68,102,0.1);color:var(--red)}
+  .proj-tag.amber{background:rgba(255,170,0,0.1);color:var(--amber)}
+  .proj-desc{font-size:13px;color:#6a8e6a;line-height:1.7;margin-bottom:10px}
+  .proj-tools{display:flex;flex-wrap:wrap;gap:6px}
+  .tool-pill{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);border:1px solid var(--border);border-radius:2px;padding:2px 7px}
+  .proj-link{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--green);text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-top:10px}
+  .proj-link::after{content:' →'}
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2.5rem}
+  .skill-cat{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1rem}
+  .skill-cat-title{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--green);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase}
+  .skill-item{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;color:#9dc89d}
+  .skill-item::before{content:'>';font-family:'Share Tech Mono',monospace;color:var(--green-dim);font-size:12px}
+  .contact-bar{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1.25rem;display:flex;gap:2rem;flex-wrap:wrap;align-items:center}
+  .contact-link{display:flex;align-items:center;gap:8px;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--green);text-decoration:none}
+  .contact-link:hover{color:#fff}
+  footer{border-top:1px solid var(--border);padding:1rem 2rem;text-align:center;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);margin-top:2rem}
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="avatar">TB</div>
+      <div class="name-block">
+        <h1>TOBI BOLAJI</h1>
+        <div class="role">Penetration Tester &nbsp;|&nbsp; Ethical Hacker</div>
+      </div>
+    </div>
+    <div>
+      <div class="status-bar"><span class="ping">●</span> AVAILABLE FOR HIRE &nbsp;|&nbsp; UK-BASED</div>
+      <div class="nav-links" style="margin-top:8px;justify-content:flex-end">
+        <a href="https://github.com/hijay166" target="_blank">github</a>
+        <a href="https://linkedin.com/in/tobi-bolaji-0861b218b/" target="_blank">linkedin</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="section-label">whoami</div>
+  <div class="bio-block">
+    <p>MSc Cybersecurity student with a sharp focus on penetration testing, vulnerability assessment, and offensive security. I break things legally — web apps, networks, and systems — to help organisations understand their exposure before adversaries do. Certified in both CompTIA Security+ and Network+.</p>
+    <div class="certs">
+      <span class="cert-badge">✓ CompTIA Security+</span>
+      <span class="cert-badge">✓ CompTIA Network+</span>
+      <span class="cert-badge">✓ MSc Cybersecurity,Threat intelligence and Forensics (in progress)</span>
+    </div>
+  </div>
+
+  <div class="section-label">projects // red team</div>
+  <div class="projects-grid">
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-name">WebVuln-Scanner</div>
+        <span class="proj-tag">Web Pentest</span>
+      </div>
+      <div class="proj-desc">Automated Python tool to detect OWASP Top 10 vulnerabilities — SQLi, XSS, IDOR, and broken auth — across target web applications. Generates structured reports.</div>
+      <div class="proj-tools">
+        <span class="tool-pill">Python</span><span class="tool-pill">Burp Suite</span><span class="tool-pill">OWASP</span><span class="tool-pill">SQLMap</span>
+      </div>
+      <a class="proj-link" href="https://github.com/hijay166/WebVuln-Scanner-OWASP-Top-10-Web-Vulnerability-Scanner" target="_blank">View on GitHub</a>
+    </div>
+    <div class="proj-card red">
+      <div class="proj-top">
+        <div class="proj-name">Active Directory Lab</div>
+        <span class="proj-tag red">Network Attack</span>
+      </div>
+      <div class="proj-desc">Home lab simulating a corporate AD environment. Demonstrates Pass-the-Hash, Kerberoasting, and privilege escalation with Mimikatz and BloodHound. Full write-up included.</div>
+      <div class="proj-tools">
+        <span class="tool-pill">Kali Linux</span><span class="tool-pill">BloodHound</span><span class="tool-pill">Mimikatz</span><span class="tool-pill">Impacket</span>
+      </div>
+      <a class="proj-link" href="https://github.com/hijay166/Active-Directory-Attack-Lab" target="_blank">View on GitHub</a>
+    </div>
+    <div class="proj-card amber">
+      <div class="proj-top">
+        <div class="proj-name">CTF Write-up Repo</div>
+        <span class="proj-tag amber">CTF / Learning</span>
+      </div>
+      <div class="proj-desc">Detailed write-ups for 3+ TryHackMe and HackTheBox challenges covering privilege escalation, reverse engineering, and cryptography. Annotated with methodology.</div>
+      <div class="proj-tools">
+        <span class="tool-pill">TryHackMe</span><span class="tool-pill">HackTheBox</span><span class="tool-pill">GDB</span><span class="tool-pill">Ghidra</span>
+      </div>
+      <a class="proj-link" href="https://github.com/hijay166/CTF-Write-up-Repo" target="_blank">View on GitHub</a>
+    </div>
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-name">Network Recon Toolkit</div>
+        <span class="proj-tag">Reconnaissance</span>
+      </div>
+      <div class="proj-desc">Bash-based automation toolkit for network reconnaissance — combines Nmap, Netdiscover, and Enum4linux output into a clean markdown report for pentest engagements.</div>
+      <div class="proj-tools">
+        <span class="tool-pill">Nmap</span><span class="tool-pill">Bash</span><span class="tool-pill">Enum4linux</span><span class="tool-pill">Nikto</span>
+      </div>
+      <a class="proj-link" href="https://github.com/hijay166/Network-Recon-Toolkit" target="_blank">View on GitHub</a>
+    </div>
+    <div class="proj-card red">
+      <div class="proj-top">
+        <div class="proj-name">Phishing Sim Lab</div>
+        <span class="proj-tag red">Social Engineering</span>
+      </div>
+      <div class="proj-desc">Controlled phishing simulation built with GoPhish to study credential harvesting and awareness training. Includes analysis of click-through rates and detection bypass techniques.</div>
+      <div class="proj-tools">
+        <span class="tool-pill">GoPhish</span><span class="tool-pill">SET</span><span class="tool-pill">Python</span><span class="tool-pill">HTML/CSS</span>
+      </div>
+      <a class="proj-link" href="https://github.com/hijay166/Phishing-Simulation-Lab" target="_blank">View on GitHub</a>
+    </div>
+  </div>
+
+  <div class="section-label">arsenal // tools</div>
+  <div class="skills-grid">
+    <div class="skill-cat">
+      <div class="skill-cat-title">Exploitation</div>
+      <div class="skill-item">Metasploit Framework</div>
+      <div class="skill-item">Burp Suite Pro</div>
+      <div class="skill-item">SQLMap</div>
+      <div class="skill-item">Hydra / Medusa</div>
+    </div>
+    <div class="skill-cat">
+      <div class="skill-cat-title">Recon & OSINT</div>
+      <div class="skill-item">Nmap / Masscan</div>
+      <div class="skill-item">Recon-ng</div>
+      <div class="skill-item">Shodan</div>
+      <div class="skill-item">theHarvester</div>
+    </div>
+    <div class="skill-cat">
+      <div class="skill-cat-title">Post-Exploitation</div>
+      <div class="skill-item">BloodHound / SharpHound</div>
+      <div class="skill-item">Mimikatz</div>
+      <div class="skill-item">Impacket Suite</div>
+      <div class="skill-item">Cobalt Strike (concepts)</div>
+    </div>
+    <div class="skill-cat">
+      <div class="skill-cat-title">Scripting</div>
+      <div class="skill-item">Python 3</div>
+      <div class="skill-item">Bash scripting</div>
+      <div class="skill-item">PowerShell</div>
+      <div class="skill-item">Wireshark / tcpdump</div>
+    </div>
+  </div>
+
+  <div class="section-label">connect</div>
+  <div class="contact-bar">
+    <a class="contact-link" href="https://github.com/hijay166" target="_blank">⬡ github.com/hijay166</a>
+    <a class="contact-link" href="https://linkedin.com/in/tobi-bolaji-0861b218b/" target="_blank">⬡ linkedin.com/in/tobi-bolaji</a>
+    <a class="contact-link" href="https://tryhackme.com/p/hijay162" target="_blank">⬡ TryHackMe Profile</a>
+  </div>
+</main>
+<footer>© 2025 Tobi Bolaji &nbsp;|&nbsp; Authorised testing only &nbsp;|&nbsp; github.com/hijay166</footer>
+</body>
+</html>
